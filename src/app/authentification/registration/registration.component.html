@@ -1,0 +1,14 @@
+<h2>Registration form!</h2>
+<mat-card>
+  <mat-form-field>
+    <mat-label>Enter email</mat-label>
+    <input matInput [(ngModel)]="email">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Enter password</mat-label>
+    <input matInput [(ngModel)]="password">
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" (click)="onRegistration()">Registration</button>
+</mat-card>

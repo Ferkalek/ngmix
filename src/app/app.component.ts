@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpService } from './http.service';
 
 @Component({
   selector: 'app-root',
@@ -7,13 +6,8 @@ import { HttpService } from './http.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit{
-  users = [];
 
-  constructor(
-    private httpService: HttpService
-  ) {}
+  constructor() {}
 
-  ngOnInit() {
-    this.httpService.getUsers().subscribe(d => this.users = d.data);
-  }
+  ngOnInit() {}
 }
