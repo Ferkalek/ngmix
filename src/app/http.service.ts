@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+const BASE_URL = 'https://reqres.in/api/';
+
 @Injectable()
 export class HttpService {
 
@@ -10,6 +12,6 @@ export class HttpService {
   ) {}
 
   getUsers(): Observable<any> {
-    return this.http.get<any>('https://reqres.in/api/users?page=2');
+    return this.http.get<any>(`${BASE_URL}users?page=2`);
   }
 }
