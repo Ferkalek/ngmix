@@ -28,15 +28,14 @@ export class RegistrationComponent implements OnInit {
       };
 
       this.authService.sendRegistration(data).subscribe(
-        (val) => {
-            console.log("POST call successful value returned in body",
-                        val);
-        },
         response => {
-            console.log("POST call in error", response);
+            console.log('Result:', response);
+        },
+        err => {
+            console.log('Error:', err);
         },
         () => {
-            console.log("The POST observable is now completed.");
+            console.log('The POST observable is now completed.');
         });
     }
   }
