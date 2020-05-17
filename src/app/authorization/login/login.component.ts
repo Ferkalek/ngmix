@@ -1,6 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { AuthService } from '../auth.service';
-import { IAuthReq } from '../auth.interface';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+// import { AuthService } from '../auth.service';
+// import { IAuthReq } from '../auth.interface';
 
 @Component({
   selector: 'app-login',
@@ -8,36 +8,33 @@ import { IAuthReq } from '../auth.interface';
   styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
-  email = '';
-  password = '';
+  // email = '';
+  // password = '';
 
-  constructor(
-    private authService: AuthService
-  ) { }
+  // constructor(
+  //   private authService: AuthService
+  // ) { }
 
-  ngOnInit(): void {
-  }
+  // onLogin() {
+  //   if (this.email && this.password) {
+  //     const data: IAuthReq = {
+  //       email: this.email,
+  //       password: this.password
+  //     };
 
-  onLogin() {
-    if (this.email && this.password) {
-      const data: IAuthReq = {
-        email: this.email,
-        password: this.password
-      };
-
-      this.authService.onLogin(data).subscribe(
-        response => {
-          console.log('Result:', response);
-        },
-        err => {
-            console.log('Error:', err);
-        },
-        () => {
-            console.log('The POST observable is now completed.');
-        });
-    }
-  }
+  //     this.authService.onLogin(data).subscribe(
+  //       response => {
+  //         console.log('Result:', response);
+  //       },
+  //       err => {
+  //           console.log('Error:', err);
+  //       },
+  //       () => {
+  //           console.log('The POST observable is now completed.');
+  //       });
+  //   }
+  // }
 
 }
