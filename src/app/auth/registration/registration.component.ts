@@ -1,14 +1,14 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { IAuthReq } from '../auth.interface';
 
 @Component({
-  selector: 'app-registration',
+  selector: 'app-register',
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RegistrationComponent implements OnInit {
+export class RegistrationComponent {
 
   email = '';
   password = '';
@@ -16,9 +16,6 @@ export class RegistrationComponent implements OnInit {
   constructor(
     private authService: AuthService
   ) { }
-
-  ngOnInit(): void {
-  }
 
   onRegistration() {
     if (this.email && this.password) {
@@ -29,13 +26,13 @@ export class RegistrationComponent implements OnInit {
 
       this.authService.sendRegistration(data).subscribe(
         response => {
-            console.log('Result:', response);
+          console.log('Result:', response);
         },
         err => {
-            console.log('Error:', err);
+          console.log('Error:', err);
         },
         () => {
-            console.log('The POST observable is now completed.');
+          console.log('The POST observable is now completed.');
         });
     }
   }

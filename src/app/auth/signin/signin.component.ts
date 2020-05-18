@@ -1,4 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { AuthService } from '../auth.service';
+import { IAuthReq } from '../auth.interface';
 
 @Component({
   selector: 'app-signin',
@@ -6,11 +8,33 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./signin.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SigninComponent implements OnInit {
+export class SigninComponent {
 
-  constructor() { }
+  email = '';
+  password = '';
 
-  ngOnInit(): void {
+  constructor(
+    private authService: AuthService
+  ) { }
+
+  onLogin() {
+    if (this.email && this.password) {
+      const data: IAuthReq = {
+        email: this.email,
+        password: this.password
+      };
+
+      this.authService.onLogin(data).subscribe(
+        response => {
+          console.log('Result:', response);
+        },
+        err => {
+          console.log('Error:', err);
+        },
+        () => {
+          console.log('The POST observable is now completed.');
+        });
+    }
   }
 
 }

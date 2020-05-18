@@ -4,14 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 
-import { RegistrationComponent } from './authorization/registration/registration.component';
-
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  {
-    path: 'auth/registration',
-    component: RegistrationComponent
-  },
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
@@ -31,4 +25,4 @@ const routes: Routes = [
     RouterModule
   ]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

@@ -14,8 +14,6 @@ export class AuthService {
   ) { }
 
   sendRegistration(userData: IAuthReq): Observable<IAuthRes> {
-    console.log('.... sendRegistration', userData);
-
     return this.http.post<IAuthRes>(AUTH_URLS.registration,
       {
         email: 'eve.holt@reqres.in',
@@ -25,13 +23,9 @@ export class AuthService {
   }
 
   onLogin(userData: IAuthReq): Observable<ILoginToken> {
-    console.log('.... onLogin', userData);
-
     return this.http.post<ILoginToken>(AUTH_URLS.login, {
       email: 'eve.holt@reqres.in',
       password: 'cityslicka'
     });
   }
-
-
 }
