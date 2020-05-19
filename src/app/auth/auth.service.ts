@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IAuthReq, IAuthRes, ILoginToken } from './auth.interface';
+import { IAuthReqDTO, IAuthResDTO, ILoginToken } from './auth.interface';
 import { AUTH_URLS } from './auth.constants';
+import { AuthRepositorySerive } from './auth-repository.serive';
 
 @Injectable({
   providedIn: 'root',
@@ -10,22 +11,14 @@ import { AUTH_URLS } from './auth.constants';
 export class AuthService {
 
   constructor(
-    private http: HttpClient
+    private authRepositorySerive: AuthRepositorySerive
   ) { }
 
-  sendRegistration(userData: IAuthReq): Observable<IAuthRes> {
-    return this.http.post<IAuthRes>(AUTH_URLS.registration,
-      {
-        email: 'eve.holt@reqres.in',
-        password: 'pistol'
-      }
-    );
+  registration(userData: IAuthReqDTO): Observable<IAuthResDTO> {
+    return this.authRepositorySerive.sendRegistrationRequest(userData);
   }
 
-  onLogin(userData: IAuthReq): Observable<ILoginToken> {
-    return this.http.post<ILoginToken>(AUTH_URLS.login, {
-      email: 'eve.holt@reqres.in',
-      password: 'cityslicka'
-    });
+  login(userData: IAuthReqDTO): Observable<ILoginToken> {
+    return this.authRepositorySerive.sendLoginRequest(userData);
   }
 }

@@ -1,9 +1,9 @@
-export interface IAuthReq {
+export interface IAuthReqDTO {
   email: string;
   password: string;
 }
 
-export interface IAuthRes {
+export interface IAuthResDTO {
   id: number;
   token: string;
 }
