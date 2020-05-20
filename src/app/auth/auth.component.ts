@@ -12,20 +12,20 @@ import { AUTH_PATH } from './auth.constants';
 })
 export class AuthComponent implements OnInit {
 
-  email = '';
-  password = '';
-  isLoginPage = false;
+  email: string = '';
+  password: string = '';
+  isLoginPage: boolean = false;
 
   constructor(
     private authService: AuthService,
     private router: Router
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.isLoginPage = this.router.routerState.snapshot.url === AUTH_PATH.login;
   }
 
-  login() {
+  login(): void {
     if (!this.email || !this.password) {
       return;
     }
@@ -40,21 +40,12 @@ export class AuthComponent implements OnInit {
       password: 'cityslicka'
     }
 
-    this.authService.login(data).subscribe(
-      response => {
-        console.log('Result:', response);
-      },
-      err => {
-        console.log('Error:', err);
-      },
-      () => {
-        console.log('The POST observable is now completed.');
-      });
+    this.authService.login(data).subscribe();
 
     this.clear();
   }
 
-  registration() {
+  registration(): void {
     if (!this.email || !this.password) {
       return;
     }
@@ -69,21 +60,12 @@ export class AuthComponent implements OnInit {
       password: 'pistol'
     }
 
-    this.authService.registration(data).subscribe(
-      response => {
-        console.log('Result:', response);
-      },
-      err => {
-        console.log('Error:', err);
-      },
-      () => {
-        console.log('The POST observable is now completed.');
-      });
+    this.authService.registration(data).subscribe();
 
     this.clear();
   }
 
-  clear() {
+  clear(): void {
     this.email = '';
     this.password = '';
   }

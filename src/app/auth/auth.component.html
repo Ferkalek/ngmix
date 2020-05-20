@@ -1,11 +1,11 @@
 <h2 [textContent]="isLoginPage ? 'Login page!' : 'Registration page!'"></h2>
-<mat-card>
-    <mat-form-field>
+<mat-card class="auth-form-card">
+    <mat-form-field class="auth-form-card--field">
         <mat-label>Enter email</mat-label>
         <input matInput [(ngModel)]="email">
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field class="auth-form-card--field">
         <mat-label>Enter password</mat-label>
         <input matInput [(ngModel)]="password">
     </mat-form-field>
