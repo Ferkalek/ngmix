@@ -1,8 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
+
 import { IAuthReqDTO } from './auth.interface';
 import { AuthService } from './auth.service';
-import { AUTH_PATH } from './auth.constants';
+import { AUTH_PATH, ERRORS, HINTS } from './auth.constants';
 
 @Component({
   selector: 'app-auth',
@@ -15,6 +17,7 @@ export class AuthComponent implements OnInit {
   email: string = '';
   password: string = '';
   isLoginPage: boolean = false;
+  hint$: BehaviorSubject<string> = new BehaviorSubject('');
 
   constructor(
     private authService: AuthService,
@@ -30,19 +33,22 @@ export class AuthComponent implements OnInit {
       return;
     }
 
-    // const data: IAuthReqDTO = {
-    //   email: this.email,
-    //   password: this.password
-    // };
+    const data: IAuthReqDTO = {
+      email: this.email,
+      password: this.password
+    };
 
-    const data = {
-      email: 'eve.holt@reqres.in',
-      password: 'cityslicka'
-    }
-
-    this.authService.login(data).subscribe();
+    this.authService.login(data).subscribe(
+      result => {},
+      err => {
+        if (err.status === 400 && err.error.error === ERRORS.login) {
+          this.hint$.next(HINTS.login)
+        }
+      }
+    );
 
     this.clear();
+    this.closeHint();
   }
 
   registration(): void {
@@ -50,17 +56,19 @@ export class AuthComponent implements OnInit {
       return;
     }
 
-    // const data: IAuthReqDTO = {
-    //   email: this.email,
-    //   password: this.password
-    // };
+    const data: IAuthReqDTO = {
+      email: this.email,
+      password: this.password
+    };
 
-    const data = {
-      email: 'eve.holt@reqres.in',
-      password: 'pistol'
-    }
-
-    this.authService.registration(data).subscribe();
+    this.authService.registration(data).subscribe(
+      result => {},
+      err => {
+        if (err.status === 400 && err.error.error === ERRORS.registration) {
+          this.hint$.next(HINTS.registration)
+        }
+      }
+    );
 
     this.clear();
   }
@@ -68,6 +76,10 @@ export class AuthComponent implements OnInit {
   clear(): void {
     this.email = '';
     this.password = '';
+  }
+
+  closeHint(): void {
+    this.hint$.next('');
   }
 
 }

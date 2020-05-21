@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthComponent } from './auth.component';
@@ -21,6 +22,7 @@ import { AuthComponent } from './auth.component';
     MatInputModule,
     MatCardModule,
     MatButtonModule,
+    MatIconModule,
   ]
 })
 export class AuthModule { }
