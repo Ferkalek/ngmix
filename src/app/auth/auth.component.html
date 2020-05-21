@@ -1,16 +1,5 @@
 <h2 [textContent]="isLoginPage ? 'Login page!' : 'Registration page!'"></h2>
 
-<div *ngIf="(hint$ | async) as hint" class="hint">
-    <span class="hint__text">{{hint}}</span>
-    <button 
-        mat-icon-button color="primary" 
-        aria-label="Close hint"
-        (click)="closeHint()"
-    >
-        <mat-icon>close</mat-icon>
-    </button>
-</div>
-
 <mat-card class="auth-form-card">
     <mat-form-field class="auth-form-card--field">
         <mat-label>Enter email</mat-label>
@@ -19,7 +8,7 @@
 
     <mat-form-field class="auth-form-card--field">
         <mat-label>Enter password</mat-label>
-        <input matInput [(ngModel)]="password">
+        <input matInput [(ngModel)]="password" type="password">
     </mat-form-field>
 
     <ng-container *ngIf="isLoginPage">

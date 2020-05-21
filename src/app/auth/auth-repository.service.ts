@@ -13,10 +13,10 @@ export class AuthRepositorySerive {
     ) { }
 
     sendRegistrationRequest(userData: IAuthReqDTO): Observable<IAuthResDTO> {
-        return this.http.post<IAuthResDTO>(AUTH_URLS.registration, userData);
+        return this.http.post<IAuthResDTO>(AUTH_URLS.Registration, userData);
     }
 
     sendLoginRequest(userData: IAuthReqDTO): Observable<ILoginToken> {
-        return this.http.post<ILoginToken>(AUTH_URLS.login, userData);
+        return this.http.post<ILoginToken>(AUTH_URLS.Login, userData);
     }
 }
