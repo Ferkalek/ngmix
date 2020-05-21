@@ -1,9 +1,18 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router'
-import { HomeComponent } from './home/home.component';
+import { Routes, RouterModule } from '@angular/router';
+
+import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  {
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+  },
+  {
+    path: 'users-list',
+    loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
+  },
+  { path: '**', component: NotFoundPageComponent }
 ];
 
 @NgModule({
@@ -14,4 +23,4 @@ const routes: Routes = [
     RouterModule
   ]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
