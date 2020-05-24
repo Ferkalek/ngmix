@@ -36,7 +36,13 @@ export class AuthComponent implements OnInit {
       password: this.password
     };
 
-    this.authService.login(data).subscribe();
+    this.authService.login(data)
+      .subscribe(result => {
+        if (result) {
+          this.authService.setLocalStorage(result.token);
+          this.router.navigate(['/']);
+        }
+      });
 
     this.clear();
   }
@@ -51,7 +57,12 @@ export class AuthComponent implements OnInit {
       password: this.password
     };
 
-    this.authService.registration(data).subscribe();
+    this.authService.registration(data)
+      .subscribe(result => {
+        if (result) {
+          this.router.navigate(['/auth/login']);
+        }
+      });
 
     this.clear();
   }

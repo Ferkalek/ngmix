@@ -1,8 +1,14 @@
 <mat-toolbar color="primary">
-  <a mat-button routerLink="/users-list">User list</a>
+  <a mat-button routerLink="">User list</a>
 
   <span class="fill-remaining-space"></span>
   
-  <a mat-button routerLink="/auth/registration">Registration</a>
-  <a mat-button routerLink="/auth/login">Login</a>
+  <ng-container *ngIf="isLogin | async">
+    <button mat-button (click)="logout()">Logout</button>
+  </ng-container>
+
+  <ng-container *ngIf="!(isLogin | async)">
+    <a mat-button routerLink="/auth/registration">Registration</a>
+    <a mat-button routerLink="/auth/login">Login</a>
+  </ng-container>
 </mat-toolbar>

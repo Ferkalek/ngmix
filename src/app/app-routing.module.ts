@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { AuthGuardGuard } from './auth/auth-guard.guard';
+
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
+
 
 const routes: Routes = [
   {
@@ -9,8 +12,9 @@ const routes: Routes = [
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
   },
   {
-    path: 'users-list',
-    loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
+    path: '',
+    loadChildren: () => import('./users/users.module').then(m => m.UsersModule),
+    canActivate: [AuthGuardGuard]
   },
   { path: '**', component: NotFoundPageComponent }
 ];
