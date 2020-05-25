@@ -3,11 +3,11 @@
 
   <span class="fill-remaining-space"></span>
   
-  <ng-container *ngIf="isLogin | async">
+  <ng-container *ngIf="isLogedin">
     <button mat-button (click)="logout()">Logout</button>
   </ng-container>
 
-  <ng-container *ngIf="!(isLogin | async)">
+  <ng-container *ngIf="!isLogedin">
     <a mat-button routerLink="/auth/registration">Registration</a>
     <a mat-button routerLink="/auth/login">Login</a>
   </ng-container>

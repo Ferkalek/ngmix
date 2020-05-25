@@ -7,7 +7,7 @@ import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuardGuard implements CanActivate {
+export class AuthGuard implements CanActivate {
   constructor(
     private router: Router,
     private authService: AuthService
@@ -15,13 +15,12 @@ export class AuthGuardGuard implements CanActivate {
 
   canActivate(
     next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    state: RouterStateSnapshot
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     
-    this.authService.checkLocalStorage();
-
-    const isLogin = this.authService.isLogin$.value;
+    const token = this.authService.checkToken();
     
-    if (isLogin) {
+    if (token !== null) {
         return true;
     }
 

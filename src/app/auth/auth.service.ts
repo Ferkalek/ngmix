@@ -10,9 +10,6 @@ import { AuthRepositorySerive } from './auth-repository.service';
 })
 export class AuthService {
 
-  isLogin$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  token$: BehaviorSubject<string> = new BehaviorSubject('');
-
   constructor(
     private authRepositorySerive: AuthRepositorySerive,
     private router: Router
@@ -26,36 +23,16 @@ export class AuthService {
     return this.authRepositorySerive.sendLoginRequest(userData);
   }
 
-  checkLocalStorage(): void {
-    const hasToken = window.localStorage.getItem('token');
-
-    if (hasToken) {
-      this.setIsLogin(hasToken);
-    }
+  checkToken(): string | null {
+    return window.localStorage.getItem('token');
   }
 
-  setLocalStorage(token: string): void {
+  setTokenInLocalStorage(token: string): void {
     window.localStorage.setItem('token', token);
-    this.setIsLogin(token);
-  }
-
-  clearLocalStorage(): void {
-    window.localStorage.clear();
-    this.setIsLogin();
-  }
-
-  setIsLogin(token?: string): void {
-    if (token) {
-      this.isLogin$.next(true);
-      this.token$.next(token);
-    } else {
-      this.isLogin$.next(false);
-      this.token$.next('');
-    }
   }
 
   logout(): void {
-    this.clearLocalStorage();
+    window.localStorage.clear();
     this.router.navigate(['/auth/login']);
   }
 }

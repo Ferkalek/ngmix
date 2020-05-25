@@ -13,12 +13,11 @@ export class HeaderComponent {
     private authService: AuthService
   ) { }
 
-  get isLogin(): Observable<boolean> {
-    return this.authService.isLogin$;
+  get isLogedin(): boolean {
+    return !!this.authService.checkToken();
   }
 
   logout(): void {
     this.authService.logout();
   }
-
 }

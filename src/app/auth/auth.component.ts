@@ -1,5 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { IAuthReqDTO } from './auth.interface';
 import { AuthService } from './auth.service';
@@ -11,11 +12,12 @@ import { AUTH_PATH } from './auth.constants';
   styleUrls: ['./auth.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent implements OnInit, OnDestroy {
 
   email: string = '';
   password: string = '';
   isLoginPage: boolean = false;
+  subscriptions: Subscription[] = [];
 
   constructor(
     private authService: AuthService,
@@ -24,6 +26,10 @@ export class AuthComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoginPage = this.router.routerState.snapshot.url === AUTH_PATH.Login;
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
   login(): void {
@@ -36,13 +42,15 @@ export class AuthComponent implements OnInit {
       password: this.password
     };
 
-    this.authService.login(data)
-      .subscribe(result => {
-        if (result) {
-          this.authService.setLocalStorage(result.token);
-          this.router.navigate(['/']);
-        }
-      });
+    this.subscriptions.push(
+      this.authService.login(data)
+        .subscribe(result => {
+          if (result) {
+            this.authService.setTokenInLocalStorage(result.token);
+            this.router.navigate(['/']);
+          }
+        })
+    );
 
     this.clear();
   }
@@ -56,13 +64,14 @@ export class AuthComponent implements OnInit {
       email: this.email,
       password: this.password
     };
-
-    this.authService.registration(data)
-      .subscribe(result => {
-        if (result) {
-          this.router.navigate(['/auth/login']);
-        }
-      });
+    this.subscriptions.push(
+      this.authService.registration(data)
+        .subscribe(result => {
+          if (result) {
+            this.router.navigate(['/auth/login']);
+          }
+        })
+    );
 
     this.clear();
   }
