@@ -15,11 +15,11 @@ import { AuthService } from './auth/auth.service';
 export class CustomHttpInterceptor implements HttpInterceptor {
 
   constructor(
-    private authService: AuthService
+    private _authService: AuthService
   ) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const token = this.authService.checkToken();
+    const token = this._authService.checkToken();
 
     if (!!token) {
       request = request.clone({

@@ -7,10 +7,10 @@ import { Observable } from 'rxjs';
 })
 export class UsersRepositoryService {
     constructor(
-        private http: HttpClient
+        private _http: HttpClient
     ) { }
 
     sendGetUsersRequest(): Observable<any> {
-        return this.http.get<any>(`https://reqres.in/api/users?page=2`);
+        return this._http.get<any>(`https://reqres.in/api/users?page=2`);
     }
 }

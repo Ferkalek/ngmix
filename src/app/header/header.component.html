@@ -3,12 +3,12 @@
 
   <span class="fill-remaining-space"></span>
   
-  <ng-container *ngIf="isLogedin">
+  <ng-container *ngIf="isLogedin; else loggedOut">
     <button mat-button (click)="logout()">Logout</button>
   </ng-container>
 
-  <ng-container *ngIf="!isLogedin">
+  <ng-template #loggedOut>
     <a mat-button routerLink="/auth/registration">Registration</a>
     <a mat-button routerLink="/auth/login">Login</a>
-  </ng-container>
+  </ng-template>
 </mat-toolbar>

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { IAuthReqDTO, IAuthResDTO, ILoginToken } from './auth.interface';
 import { AuthRepositorySerive } from './auth-repository.service';
+import { TOKEN_KEY } from './auth.constants';
 
 @Injectable({
   providedIn: 'root',
@@ -11,28 +12,28 @@ import { AuthRepositorySerive } from './auth-repository.service';
 export class AuthService {
 
   constructor(
-    private authRepositorySerive: AuthRepositorySerive,
-    private router: Router
+    private _authRepositorySerive: AuthRepositorySerive,
+    private _router: Router
   ) { }
 
   registration(userData: IAuthReqDTO): Observable<IAuthResDTO> {
-    return this.authRepositorySerive.sendRegistrationRequest(userData);
+    return this._authRepositorySerive.sendRegistrationRequest(userData);
   }
 
   login(userData: IAuthReqDTO): Observable<ILoginToken> {
-    return this.authRepositorySerive.sendLoginRequest(userData);
+    return this._authRepositorySerive.sendLoginRequest(userData);
   }
 
   checkToken(): string | null {
-    return window.localStorage.getItem('token');
+    return window.localStorage.getItem(TOKEN_KEY);
   }
 
   setTokenInLocalStorage(token: string): void {
-    window.localStorage.setItem('token', token);
+    window.localStorage.setItem(TOKEN_KEY, token);
   }
 
   logout(): void {
     window.localStorage.clear();
-    this.router.navigate(['/auth/login']);
+    this._router.navigate(['/auth/login']);
   }
 }

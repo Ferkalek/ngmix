@@ -11,11 +11,11 @@ import { IUserDTO } from './users.interface';
 export class UsersService {
 
   constructor(
-    private usersRepositoryService: UsersRepositoryService
+    private _usersRepositoryService: UsersRepositoryService
   ) { }
 
   getUsers(): Observable<IUserDTO[]> {
-    return this.usersRepositoryService.sendGetUsersRequest()
+    return this._usersRepositoryService.sendGetUsersRequest()
       .pipe(
         map(users => users.data)
       );

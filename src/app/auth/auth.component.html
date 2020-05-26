@@ -11,11 +11,11 @@
         <input matInput [(ngModel)]="password" type="password">
     </mat-form-field>
 
-    <ng-container *ngIf="isLoginPage">
+    <ng-container *ngIf="isLoginPage; else isRegistrationPage">
         <button mat-raised-button color="primary" (click)="login()">Login</button>
     </ng-container>
 
-    <ng-container *ngIf="!isLoginPage">
+    <ng-template #isRegistrationPage>
         <button mat-raised-button color="primary" (click)="registration()">Registration</button>
-    </ng-container>
+    </ng-template>
 </mat-card>

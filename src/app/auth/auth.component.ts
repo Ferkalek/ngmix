@@ -20,12 +20,12 @@ export class AuthComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   constructor(
-    private authService: AuthService,
-    private router: Router
+    private _authService: AuthService,
+    private _router: Router
   ) { }
 
   ngOnInit(): void {
-    this.isLoginPage = this.router.routerState.snapshot.url === AUTH_PATH.Login;
+    this.isLoginPage = this._router.routerState.snapshot.url === AUTH_PATH.Login;
   }
 
   ngOnDestroy(): void {
@@ -43,11 +43,11 @@ export class AuthComponent implements OnInit, OnDestroy {
     };
 
     this.subscriptions.push(
-      this.authService.login(data)
+      this._authService.login(data)
         .subscribe(result => {
           if (result) {
-            this.authService.setTokenInLocalStorage(result.token);
-            this.router.navigate(['/']);
+            this._authService.setTokenInLocalStorage(result.token);
+            this._router.navigate(['/']);
           }
         })
     );
@@ -65,10 +65,10 @@ export class AuthComponent implements OnInit, OnDestroy {
       password: this.password
     };
     this.subscriptions.push(
-      this.authService.registration(data)
+      this._authService.registration(data)
         .subscribe(result => {
           if (result) {
-            this.router.navigate(['/auth/login']);
+            this._router.navigate(['/auth/login']);
           }
         })
     );

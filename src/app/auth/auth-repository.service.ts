@@ -9,14 +9,14 @@ import { AUTH_URLS } from './auth.constants';
 })
 export class AuthRepositorySerive {
     constructor(
-        private http: HttpClient
+        private _http: HttpClient
     ) { }
 
     sendRegistrationRequest(userData: IAuthReqDTO): Observable<IAuthResDTO> {
-        return this.http.post<IAuthResDTO>(AUTH_URLS.Registration, userData);
+        return this._http.post<IAuthResDTO>(AUTH_URLS.Registration, userData);
     }
 
     sendLoginRequest(userData: IAuthReqDTO): Observable<ILoginToken> {
-        return this.http.post<ILoginToken>(AUTH_URLS.Login, userData);
+        return this._http.post<ILoginToken>(AUTH_URLS.Login, userData);
     }
 }

@@ -10,14 +10,14 @@ import { Observable } from 'rxjs';
 })
 export class HeaderComponent { 
   constructor(
-    private authService: AuthService
+    private _authService: AuthService
   ) { }
 
   get isLogedin(): boolean {
-    return !!this.authService.checkToken();
+    return !!this._authService.checkToken();
   }
 
   logout(): void {
-    this.authService.logout();
+    this._authService.logout();
   }
 }

@@ -7,3 +7,5 @@ export enum AUTH_PATH {
     Registration = '/auth/registration',
     Login = '/auth/login'
 }
+
+export const TOKEN_KEY = 'token';

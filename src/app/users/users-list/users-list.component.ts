@@ -13,19 +13,19 @@ import { IUserDTO } from '../users.interface';
 export class UsersListComponent implements OnInit, OnDestroy { 
 
   subscriptions: Subscription[] = [];
-  users$$: Observable<IUserDTO[]>;
-  private users$: BehaviorSubject<IUserDTO[]> = new BehaviorSubject([]);
+  users$: Observable<IUserDTO[]>;
+  private _users$: BehaviorSubject<IUserDTO[]> = new BehaviorSubject([]);
 
   constructor(
-    private usersService: UsersService
+    private _usersService: UsersService
   ) {
-    this.users$$ = this.users$.asObservable();
+    this.users$ = this._users$.asObservable();
   }
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.usersService.getUsers()
-        .subscribe(users => this.users$.next(users))
+      this._usersService.getUsers()
+        .subscribe(users => this._users$.next(users))
     );
   }
 
