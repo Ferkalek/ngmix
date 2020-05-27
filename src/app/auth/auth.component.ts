@@ -60,12 +60,13 @@ export class AuthComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const data: IAuthReqDTO = {
+    const userData: IAuthReqDTO = {
       email: this.email,
       password: this.password
     };
+
     this.subscriptions.push(
-      this._authService.registration(data)
+      this._authService.registration(userData)
         .subscribe(result => {
           if (result) {
             this._router.navigate(['/auth/login']);

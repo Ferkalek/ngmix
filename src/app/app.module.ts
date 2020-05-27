@@ -11,7 +11,7 @@ import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 
 import { AppRoutingModule } from './app-routing.module';
-import { CustomHttpInterceptor } from './custom-http.interceptor';
+import { AuthenticationInterceptor } from './authentication.interceptor';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -41,7 +41,7 @@ import { NotFoundPageComponent } from './not-found-page/not-found-page.component
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: CustomHttpInterceptor,
+      useClass: AuthenticationInterceptor,
       multi: true
     }
   ]

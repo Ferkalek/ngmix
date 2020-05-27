@@ -14,7 +14,7 @@ export class HeaderComponent {
   ) { }
 
   get isLogedin(): boolean {
-    return !!this._authService.checkToken();
+    return !!this._authService.getAccessToken();
   }
 
   logout(): void {

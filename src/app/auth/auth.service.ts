@@ -24,7 +24,7 @@ export class AuthService {
     return this._authRepositorySerive.sendLoginRequest(userData);
   }
 
-  checkToken(): string | null {
+  getAccessToken(): string | null {
     return window.localStorage.getItem(TOKEN_KEY);
   }
 
