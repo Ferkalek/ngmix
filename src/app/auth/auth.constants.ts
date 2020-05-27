@@ -1,9 +1,9 @@
-export enum AUTH_URLS {
+export enum AuthRuls {
     Registration = 'https://reqres.in/api/register',
     Login = 'https://reqres.in/api/login'
 };
 
-export enum AUTH_PATH {
+export enum AuthPath {
     Registration = '/auth/registration',
     Login = '/auth/login'
 }

@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 
 import { IAuthReqDTO } from './auth.interface';
 import { AuthService } from './auth.service';
-import { AUTH_PATH } from './auth.constants';
+import { AuthPath } from './auth.constants';
 
 @Component({
   selector: 'app-auth',
@@ -17,7 +17,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   email: string = '';
   password: string = '';
   isLoginPage: boolean = false;
-  subscriptions: Subscription[] = [];
+  private _subscriptions: Subscription[] = [];
 
   constructor(
     private _authService: AuthService,
@@ -25,11 +25,11 @@ export class AuthComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.isLoginPage = this._router.routerState.snapshot.url === AUTH_PATH.Login;
+    this.isLoginPage = this._router.routerState.snapshot.url === AuthPath.Login;
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach(sub => sub.unsubscribe());
+    this._subscriptions.forEach(sub => sub.unsubscribe());
   }
 
   login(): void {
@@ -42,13 +42,11 @@ export class AuthComponent implements OnInit, OnDestroy {
       password: this.password
     };
 
-    this.subscriptions.push(
+    this._subscriptions.push(
       this._authService.login(data)
         .subscribe(result => {
-          if (result) {
-            this._authService.setTokenInLocalStorage(result.token);
-            this._router.navigate(['/']);
-          }
+          this._authService.setTokenInLocalStorage(result.token);
+          this._router.navigate(['/']);
         })
     );
 
@@ -65,12 +63,10 @@ export class AuthComponent implements OnInit, OnDestroy {
       password: this.password
     };
 
-    this.subscriptions.push(
+    this._subscriptions.push(
       this._authService.registration(userData)
         .subscribe(result => {
-          if (result) {
-            this._router.navigate(['/auth/login']);
-          }
+          this._router.navigate(['/auth/login']);
         })
     );
 
