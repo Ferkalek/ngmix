@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IAuthReqDTO, IAuthResDTO, ILoginToken } from './auth.interface';
-import { AuthRuls } from './auth.constants';
+import { AuthenticationEndpoints } from './auth.constants';
 
 @Injectable({
     providedIn: 'root',
@@ -13,10 +13,10 @@ export class AuthRepositorySerive {
     ) { }
 
     sendRegistrationRequest(userData: IAuthReqDTO): Observable<IAuthResDTO> {
-        return this._http.post<IAuthResDTO>(AuthRuls.Registration, userData);
+        return this._http.post<IAuthResDTO>(AuthenticationEndpoints.Registration, userData);
     }
 
     sendLoginRequest(userData: IAuthReqDTO): Observable<ILoginToken> {
-        return this._http.post<ILoginToken>(AuthRuls.Login, userData);
+        return this._http.post<ILoginToken>(AuthenticationEndpoints.Login, userData);
     }
 }
