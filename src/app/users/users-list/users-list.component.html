@@ -1,1 +1,6 @@
 <h2>Users List page!</h2>
+<ul *ngIf="(users$ | async) as users">
+    <li *ngFor="let user of users">
+        <h3>{{user.first_name}} {{user.last_name}}</h3>
+    </li>
+</ul> 
