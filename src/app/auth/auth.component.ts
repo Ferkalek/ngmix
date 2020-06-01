@@ -1,10 +1,11 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { IAuthReqDTO } from './auth.interface';
 import { AuthService } from './auth.service';
 import { AuthPath } from './auth.constants';
+import { ASubscriptionCollector } from '../shared/abstract-classes/subscription-collector.abstract-class';
 
 @Component({
   selector: 'app-auth',
@@ -12,24 +13,21 @@ import { AuthPath } from './auth.constants';
   styleUrls: ['./auth.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AuthComponent implements OnInit, OnDestroy {
+export class AuthComponent extends ASubscriptionCollector implements OnInit {
 
   email: string = '';
   password: string = '';
   isLoginPage: boolean = false;
-  private _subscriptions: Subscription[] = [];
 
   constructor(
     private _authService: AuthService,
     private _router: Router
-  ) { }
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.isLoginPage = this._router.routerState.snapshot.url === AuthPath.Login;
-  }
-
-  ngOnDestroy(): void {
-    this._subscriptions.forEach(sub => sub.unsubscribe());
   }
 
   login(): void {

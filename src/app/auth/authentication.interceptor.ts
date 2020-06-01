@@ -7,7 +7,7 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { AuthService } from './auth/auth.service';
+import { AuthService } from './auth.service';
 
 enum Interceptor {
   Authorization = 'Authorization',
