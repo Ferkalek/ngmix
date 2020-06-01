@@ -1,9 +1,11 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { IAuthReqDTO } from './auth.interface';
 import { AuthService } from './auth.service';
-import { AUTH_PATH } from './auth.constants';
+import { AuthPath } from './auth.constants';
+import { ASubscriptionCollector } from '../shared/abstract-classes/subscription-collector.abstract-class';
 
 @Component({
   selector: 'app-auth',
@@ -11,19 +13,21 @@ import { AUTH_PATH } from './auth.constants';
   styleUrls: ['./auth.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent extends ASubscriptionCollector implements OnInit {
 
   email: string = '';
   password: string = '';
   isLoginPage: boolean = false;
 
   constructor(
-    private authService: AuthService,
-    private router: Router
-  ) { }
+    private _authService: AuthService,
+    private _router: Router
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
-    this.isLoginPage = this.router.routerState.snapshot.url === AUTH_PATH.Login;
+    this.isLoginPage = this._router.routerState.snapshot.url === AuthPath.Login;
   }
 
   login(): void {
@@ -36,7 +40,13 @@ export class AuthComponent implements OnInit {
       password: this.password
     };
 
-    this.authService.login(data).subscribe();
+    this._subscriptions.push(
+      this._authService.login(data)
+        .subscribe(result => {
+          this._authService.setTokenInLocalStorage(result.token);
+          this._router.navigate(['/']);
+        })
+    );
 
     this.clear();
   }
@@ -46,12 +56,17 @@ export class AuthComponent implements OnInit {
       return;
     }
 
-    const data: IAuthReqDTO = {
+    const userData: IAuthReqDTO = {
       email: this.email,
       password: this.password
     };
 
-    this.authService.registration(data).subscribe();
+    this._subscriptions.push(
+      this._authService.registration(userData)
+        .subscribe(result => {
+          this._router.navigate(['/auth/login']);
+        })
+    );
 
     this.clear();
   }

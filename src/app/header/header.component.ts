@@ -1,4 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { AuthService } from '../auth/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -6,4 +8,16 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeaderComponent { }
+export class HeaderComponent { 
+  constructor(
+    private _authService: AuthService
+  ) { }
+
+  get isLogedin(): boolean {
+    return !!this._authService.getAccessToken();
+  }
+
+  logout(): void {
+    this._authService.logout();
+  }
+}

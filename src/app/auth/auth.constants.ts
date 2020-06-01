@@ -1,9 +1,11 @@
-export enum AUTH_URLS {
+export enum AuthenticationEndpoints {
     Registration = 'https://reqres.in/api/register',
     Login = 'https://reqres.in/api/login'
 };
 
-export enum AUTH_PATH {
+export enum AuthPath {
     Registration = '/auth/registration',
     Login = '/auth/login'
 }
+
+export const TOKEN_KEY = 'token';
