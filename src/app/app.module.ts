@@ -17,6 +17,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
+import { TutorialState } from './state/tutorial.state';
 
 
 @NgModule({
@@ -33,7 +34,9 @@ import { NotFoundPageComponent } from './not-found-page/not-found-page.component
     MatToolbarModule,
     MatButtonModule,
 
-    NgxsModule.forRoot(),
+    NgxsModule.forRoot([
+      TutorialState
+    ]),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsLoggerPluginModule.forRoot()
   ],
