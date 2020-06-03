@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { Store } from '@ngxs/store';
+import { Store, Select } from '@ngxs/store';
 import { IUserDTO } from '../users.interface';
 import { Observable } from 'rxjs';
 import { UsersService } from '../users.service';
@@ -13,14 +13,15 @@ import { ASubscriptionCollector } from 'src/app/shared/abstract-classes/subscrip
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UsersListComponent extends ASubscriptionCollector {
-  users$: Observable<IUserDTO[]>;
+  // readonly users$: Observable<IUserDTO[]>; // ???
+  @Select(state => state.users.users) users$: Observable<any>;
   
   constructor(
     private _usersService: UsersService,
     private _store: Store
   ) {
     super();
-    this.users$ = this._store.select(state => state.users.users);
+    // this.users$ = this._store.select(state => state.users.users);
   }
 
   ngOnInit(): void {
