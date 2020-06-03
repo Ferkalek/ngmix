@@ -24,10 +24,8 @@ export class UsersState {
     @Action(AddUserAction)
     add({getState, patchState }: StateContext<UsersStateModel>, { payload }: AddUserAction) {
         const state = getState();
-        console.log('-------', state);
-        console.log('------- 2', payload);
         patchState({
-            users: [...state.users, payload] // ???
+            users: [...state.users, ...payload]
         })
     }
 }
