@@ -17,7 +17,6 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
-import { TutorialState } from './state/tutorial.state';
 import { UsersState } from './state/user.state';
 
 
@@ -36,7 +35,6 @@ import { UsersState } from './state/user.state';
     MatButtonModule,
 
     NgxsModule.forRoot([
-      TutorialState,
       UsersState
     ]),
     NgxsReduxDevtoolsPluginModule.forRoot(),

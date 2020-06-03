@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { State, Selector, Action, StateContext } from '@ngxs/store';
 import { IUserDTO } from '../users/users.interface';
 import { AddUserAction } from '../actions/user.actions';

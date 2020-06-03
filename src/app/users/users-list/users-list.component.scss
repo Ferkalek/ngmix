@@ -1,0 +1,19 @@
+.user-list {
+    padding: 0 15px 50px;
+}
+
+.user-card {
+    margin: 0 auto;
+    max-width: 400px;
+    margin-top: 50px;
+
+    &__avatar {
+        overflow: hidden;
+        width: 125px;
+        height: 125px;
+    }
+
+    &__title {
+        padding-top: 25px;
+    }
+}
