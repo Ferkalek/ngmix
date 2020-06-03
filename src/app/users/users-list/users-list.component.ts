@@ -19,20 +19,27 @@ export class UsersListComponent {
   // private _users$: BehaviorSubject<IUserDTO[]> = new BehaviorSubject([]);
   // private _subscriptions: Subscription[] = [];
 
-  @Select(state => state.users) users$: Observable<IUserDTO[]>;
+  // by documentation
+  // @Select(state => state.users) users$: Observable<IUserDTO[]>;
+
+  // second way
+  users$: Observable<IUserDTO[]>;
   
   constructor(
     private _usersService: UsersService,
     private store: Store
   ) {
     // this.users$ = this._users$.asObservable();
+
+    // second way
+    this.users$ = this.store.select(state => state.users.users)
   }
 
   ngOnInit(): void {
-    // this._subscriptions.push(
-    //   this._usersService.getUsers()
-    //     .subscribe(users => this._users$.next(users))
-    // );
+      this._usersService.getUsers()
+        .subscribe(users => {
+          users.forEach(user => this.addUser(user))
+        })
   }
 
   addUser(user: IUserDTO): void {
