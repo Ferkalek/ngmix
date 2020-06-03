@@ -1,7 +1,7 @@
 const BASE_URL = 'https://reqres.in/';
 const API = 'api/';
 
-// export enum Api {
+// export enum Api { // ??? + env
 //     Registration = `${BASE_URL}${API}register`;
 //     Login = `${BASE_URL}${API}login`;
 //     Users = `${BASE_URL}${API}users`;

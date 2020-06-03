@@ -17,16 +17,14 @@ export class UsersListComponent extends ASubscriptionCollector {
   
   constructor(
     private _usersService: UsersService,
-    private store: Store
+    private _store: Store
   ) {
     super();
-    this.users$ = this.store.select(state => state.users.users);
+    this.users$ = this._store.select(state => state.users.users);
   }
 
   ngOnInit(): void {
       this._usersService.getUsers()
-        .subscribe(users => {
-          users.forEach(user => this.store.dispatch(new AddUserAction(user)))
-        })
+        .subscribe(users => this._store.dispatch(new AddUserAction(users)))
   }
 }

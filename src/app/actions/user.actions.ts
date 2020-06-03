@@ -1,7 +1,7 @@
 import { IUserDTO } from '../users/users.interface';
 
 export class AddUserAction {
-    static readonly type = '[User API] Add User';
+    static readonly type = '[Users] Add Users';
 
-    constructor(public readonly payload: IUserDTO) { }
+    constructor(public readonly payload: IUserDTO[]) { }
 }
