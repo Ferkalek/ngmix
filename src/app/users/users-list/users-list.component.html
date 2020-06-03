@@ -1,11 +1,11 @@
 <h2>Users List page!</h2>
-<div class="user-list" *ngIf="(users$ | async) as users">
-    <mat-card class="user-card" *ngFor="let user of users">
+<div class="users" *ngIf="(users$ | async) as users">
+    <mat-card class="users__card" *ngFor="let user of users">
         <mat-card-header>
-          <div mat-card-avatar class="user-card__avatar">
+          <div mat-card-avatar class="users__card__avatar">
               <img [src]="user.avatar" [alt]="user.first_name">
           </div>
-          <mat-card-title class="user-card__title">{{user.first_name}} {{user.last_name}}</mat-card-title>
+          <mat-card-title class="users__card__title">{{user.first_name}} {{user.last_name}}</mat-card-title>
           <mat-card-subtitle>{{user.email}}</mat-card-subtitle>
         </mat-card-header>
     </mat-card>

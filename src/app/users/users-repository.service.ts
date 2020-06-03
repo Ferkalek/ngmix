@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IUserPageDTO } from './users.interface';
-
-const BASE_URL = 'https://reqres.in/api/users';
+import { Api } from '../shared/api-urls.constants';
 
 @Injectable({
     providedIn: 'root',
@@ -13,7 +12,9 @@ export class UsersRepositoryService {
         private _http: HttpClient
     ) { }
 
-    sendGetUsersRequest(): Observable<IUserPageDTO> {
-        return this._http.get<IUserPageDTO>(`${BASE_URL}?page=2`);
+    sendGetUsersRequest(page: string = '2'): Observable<IUserPageDTO> {
+        let params = new HttpParams();
+        params.append(Api.PageParam, page); // does not work
+        return this._http.get<IUserPageDTO>(Api.Users, { params });
     }
 }

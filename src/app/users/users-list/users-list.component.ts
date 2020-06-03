@@ -4,6 +4,7 @@ import { IUserDTO } from '../users.interface';
 import { Observable } from 'rxjs';
 import { UsersService } from '../users.service';
 import { AddUserAction } from '../../actions/user.actions';
+import { ASubscriptionCollector } from 'src/app/shared/abstract-classes/subscription-collector.abstract-class';
 
 @Component({
   selector: 'app-users-list',
@@ -11,24 +12,21 @@ import { AddUserAction } from '../../actions/user.actions';
   styleUrls: ['./users-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UsersListComponent {
+export class UsersListComponent extends ASubscriptionCollector {
   users$: Observable<IUserDTO[]>;
   
   constructor(
     private _usersService: UsersService,
     private store: Store
   ) {
-    this.users$ = this.store.select(state => state.users.users)
+    super();
+    this.users$ = this.store.select(state => state.users.users);
   }
 
   ngOnInit(): void {
       this._usersService.getUsers()
         .subscribe(users => {
-          users.forEach(user => this.addUser(user))
+          users.forEach(user => this.store.dispatch(new AddUserAction(user)))
         })
-  }
-
-  addUser(user: IUserDTO): void {
-    this.store.dispatch(new AddUserAction(user));
   }
 }
