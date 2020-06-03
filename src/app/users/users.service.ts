@@ -16,7 +16,7 @@ export class UsersService {
     getUsers(): Observable<IUserDTO[]> {
         return this._usersRepositoryService.sendGetUsersRequest()
             .pipe(
-                map(dataUsers => dataUsers.data)
+                map(({ data }) => data)
             );
     }
 }

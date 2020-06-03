@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IUsersDTO } from './users.interface';
+import { IUserPageDTO } from './users.interface';
 
 const BASE_URL = 'https://reqres.in/api/users';
 
@@ -13,7 +13,7 @@ export class UsersRepositoryService {
         private _http: HttpClient
     ) { }
 
-    sendGetUsersRequest(): Observable<IUsersDTO> {
-        return this._http.get<IUsersDTO>(`${BASE_URL}?page=2`);
+    sendGetUsersRequest(): Observable<IUserPageDTO> {
+        return this._http.get<IUserPageDTO>(`${BASE_URL}?page=2`);
     }
 }

@@ -12,11 +12,15 @@ interface IAdDTO {
     text: string;
 }
 
-export interface IUsersDTO {
+export interface IPageDTO<T> {
     page: number;
     per_page: number;
     total: number;
     total_pages: number;
-    data: IUserDTO[];
+    data: T[];
     ad: IAdDTO;
+}
+
+export interface IUserPageDTO extends IPageDTO<IUserDTO> {
+    data: IUserDTO[];
 }
