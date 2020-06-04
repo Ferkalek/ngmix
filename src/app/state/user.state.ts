@@ -1,12 +1,11 @@
 import { State, Selector, Action, StateContext } from '@ngxs/store';
 import { Injectable } from '@angular/core';
 import { IUserDTO } from '../users/users.interface';
-import { AddUserAction } from '../actions/user.actions';
+import { AddUsersAction } from '../actions/user.actions';
 
 export class UsersStateModel {
     users: IUserDTO[];
 }
-
 @State<UsersStateModel>({
     name: 'users',
     defaults: {
@@ -21,11 +20,11 @@ export class UsersState {
         return state.users;
     }
 
-    @Action(AddUserAction)
-    addUsers({getState, patchState }: StateContext<UsersStateModel>, { payload }: AddUserAction) {
+    @Action(AddUsersAction)
+    addUsers({getState, setState }: StateContext<UsersStateModel>, { users }: AddUsersAction) {
         const state = getState();
-        patchState({
-            users: [...state.users, ...payload]
+        setState({
+            users: [...state.users, ...users]
         })
     }
 }

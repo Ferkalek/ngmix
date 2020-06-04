@@ -3,8 +3,9 @@ import { Store, Select } from '@ngxs/store';
 import { IUserDTO } from '../users.interface';
 import { Observable } from 'rxjs';
 import { UsersService } from '../users.service';
-import { AddUserAction } from '../../actions/user.actions';
+import { AddUsersAction } from '../../actions/user.actions';
 import { ASubscriptionCollector } from 'src/app/shared/abstract-classes/subscription-collector.abstract-class';
+import { UsersState } from 'src/app/state/user.state';
 
 @Component({
   selector: 'app-users-list',
@@ -13,19 +14,17 @@ import { ASubscriptionCollector } from 'src/app/shared/abstract-classes/subscrip
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UsersListComponent extends ASubscriptionCollector {
-  // readonly users$: Observable<IUserDTO[]>; // ???
-  @Select(state => state.users.users) users$: Observable<any>;
+  @Select(UsersState.users) users$: Observable<IUserDTO[]>;
   
   constructor(
     private _usersService: UsersService,
     private _store: Store
   ) {
     super();
-    // this.users$ = this._store.select(state => state.users.users);
   }
 
   ngOnInit(): void {
       this._usersService.getUsers()
-        .subscribe(users => this._store.dispatch(new AddUserAction(users)))
+        .subscribe(users => this._store.dispatch(new AddUsersAction(users)))
   }
 }

@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IUserPageDTO } from './users.interface';
-import { Api } from '../shared/api-urls.constants';
+import { ReqResApiEndpoint, ReqResApiHttpParamKey } from '../shared/req-res-api.enums';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
     providedIn: 'root',
@@ -13,9 +14,10 @@ export class UsersRepositoryService {
     ) { }
 
     sendGetUsersRequest(page: string = '2'): Observable<IUserPageDTO> {
-        let params = new HttpParams();
-        params.append(Api.PageParam, page); // does not work
-        // TODO add a pagination
-        return this._http.get<IUserPageDTO>(Api.Users, { params });
+        return this._http.get<IUserPageDTO>(
+            `${environment.reqResApiBaseUrl}${environment.reqResApiPrefex}${ReqResApiEndpoint.Users}`, {
+                params: new HttpParams().append(ReqResApiHttpParamKey.Page, page)
+            }
+        );
     }
 }
