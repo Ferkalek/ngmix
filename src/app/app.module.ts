@@ -3,8 +3,6 @@ import { NgModule } from '@angular/core';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
 
 import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
@@ -17,7 +15,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
-
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -30,10 +28,8 @@ import { NotFoundPageComponent } from './not-found-page/not-found-page.component
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatToolbarModule,
-    MatButtonModule,
-
-    NgxsModule.forRoot(),
+    SharedModule,
+    NgxsModule.forRoot([]),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsLoggerPluginModule.forRoot()
   ],

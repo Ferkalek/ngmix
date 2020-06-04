@@ -2,7 +2,7 @@
   <a mat-button routerLink="">User list</a>
 
   <span class="fill-remaining-space"></span>
-  
+
   <ng-container *ngIf="isLogedin; else loggedOut">
     <button mat-button (click)="logout()">Logout</button>
   </ng-container>

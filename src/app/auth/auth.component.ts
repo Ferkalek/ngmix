@@ -1,6 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 
 import { IAuthReqDTO } from './auth.interface';
 import { AuthService } from './auth.service';
@@ -14,7 +13,6 @@ import { ASubscriptionCollector } from '../shared/abstract-classes/subscription-
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AuthComponent extends ASubscriptionCollector implements OnInit {
-
   email: string = '';
   password: string = '';
   isLoginPage: boolean = false;
@@ -75,5 +73,4 @@ export class AuthComponent extends ASubscriptionCollector implements OnInit {
     this.email = '';
     this.password = '';
   }
-
 }

@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeaderComponent { 
+export class HeaderComponent {
   constructor(
     private _authService: AuthService
   ) { }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { IAuthReqDTO, IAuthResDTO, ILoginToken } from './auth.interface';
