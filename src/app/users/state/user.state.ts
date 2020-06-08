@@ -1,6 +1,6 @@
 import { State, Selector, Action, StateContext } from '@ngxs/store';
 import { Injectable } from '@angular/core';
-import { IUserDTO } from '../users/users.interface';
+import { IUserDTO } from '../users.interface';
 import { AddUsersAction } from '../actions/user.actions';
 
 export class UsersStateModel {
@@ -14,9 +14,8 @@ export class UsersStateModel {
 })
 @Injectable()
 export class UsersState {
-
     @Selector()
-    static users(state: UsersStateModel) {
+    static users(state: UsersStateModel): IUserDTO[] {
         return state.users;
     }
 

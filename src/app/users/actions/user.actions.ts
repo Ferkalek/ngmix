@@ -1,4 +1,4 @@
-import { IUserDTO } from '../users/users.interface';
+import { IUserDTO } from '../users.interface';
 
 export class AddUsersAction {
     static readonly type = '[Users] Add Users';
