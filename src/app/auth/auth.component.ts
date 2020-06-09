@@ -15,13 +15,21 @@ import { ASubscriptionCollector } from '../shared/abstract-classes/subscription-
 })
 export class AuthComponent extends ASubscriptionCollector implements OnInit {
   readonly authForm: FormGroup = this._formBilder.group({
-    email: ['', Validators.required],
-    password: ['', Validators.required]
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(6)]]
   });
 
   get isLoginPage(): boolean {
     return this._router.routerState.snapshot.url === AuthPath.Login
   };
+
+  get email() {
+    return this.authForm.get('email');
+  }
+
+  get password() {
+    return this.authForm.get('password');
+  }
  
   constructor(
     private _authService: AuthService,
@@ -35,6 +43,7 @@ export class AuthComponent extends ASubscriptionCollector implements OnInit {
   }
 
   onSubmit(): void {
+    console.log('---', this.authForm);
     if (this.authForm.invalid) {
       return;
     }
@@ -46,33 +55,28 @@ export class AuthComponent extends ASubscriptionCollector implements OnInit {
     };
 
     if (this.isLoginPage) {
-      this.login(userData);
+      this._login(userData);
     } else {
-      this.registration(userData);
+      this._registration(userData);
     }
   }
 
-  login(userData: IAuthReqDTO): void {
+  private _login(userData: IAuthReqDTO): void {
     this._subscriptions.push(
       this._authService.login(userData)
-        .subscribe(result => {
-          this._authService.setTokenInLocalStorage(result.token);
-          this._router.navigate(['/']).then(() => this.clear());
-        })
+        .subscribe(result => this._finalizeAuthProces(result.token))
     );
   }
 
-  registration(userData: IAuthReqDTO): void {
+  private _registration(userData: IAuthReqDTO): void {
     this._subscriptions.push(
       this._authService.registration(userData)
-        .subscribe(result => {
-          this._router.navigate(['/auth/login']).then(() => this.clear());
-          this.clear();
-        })
+        .subscribe(result => this._finalizeAuthProces(result.token))
     );
   }
 
-  clear(): void {
-    this.authForm.reset();
+  private _finalizeAuthProces(token: string): void {
+    this._authService.setTokenInLocalStorage(token);
+    this._router.navigate(['/']).then(() => this.authForm.reset());
   }
 }

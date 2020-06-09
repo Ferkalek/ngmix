@@ -5,12 +5,15 @@
         <mat-form-field class="auth-form-card__field">
             <mat-label>Enter email</mat-label>
             <input matInput formControlName="email">
-            <mat-error>Enter correct email!</mat-error>
+            <mat-error *ngIf="email.touched && email.hasError('email')">Enter correct email!</mat-error>
+            <mat-error *ngIf="email.touched && email.hasError('required')">This field is required!</mat-error>
         </mat-form-field>
 
         <mat-form-field class="auth-form-card__field">
             <mat-label>Enter password</mat-label>
             <input matInput formControlName="password" type="password">
+            <mat-error *ngIf="password.touched && password.hasError('minlength')">Password should be more than 6 chars!</mat-error>
+            <mat-error *ngIf="password.touched && password.hasError('required')">This field is required!</mat-error>
         </mat-form-field>
 
         <ng-container *ngIf="isLoginPage; else registrationForm">
