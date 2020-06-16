@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
@@ -13,7 +13,7 @@ import { ASubscriptionCollector } from '../shared/abstract-classes/subscription-
   styleUrls: ['./auth.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AuthComponent extends ASubscriptionCollector implements OnInit {
+export class AuthComponent extends ASubscriptionCollector {
   readonly authForm: FormGroup = this._formBilder.group({
     email: ['', Validators.required],
     password: ['', Validators.required]
@@ -29,9 +29,6 @@ export class AuthComponent extends ASubscriptionCollector implements OnInit {
     private _formBilder: FormBuilder
   ) {
     super();
-  }
-
-  ngOnInit(): void {
   }
 
   onSubmit(): void {
