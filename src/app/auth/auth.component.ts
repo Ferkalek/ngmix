@@ -40,7 +40,6 @@ export class AuthComponent extends ASubscriptionCollector {
   }
 
   onSubmit(): void {
-    console.log('---', this.authForm);
     if (this.authForm.invalid) {
       return;
     }
