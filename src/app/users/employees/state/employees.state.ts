@@ -1,7 +1,7 @@
 import { IEmployeeDTO } from '../employees.interfase';
 import { State, Selector, Action, StateContext } from '@ngxs/store';
 import { Injectable } from '@angular/core';
-import { CreateEmployeeAction } from '../actions/employees.actions';
+import { CreateEmployeeAction, DeleteEmployeeAction } from '../actions/employees.actions';
 
 export class EmployeeStateModel {
     employees: IEmployeeDTO[];
@@ -21,10 +21,18 @@ export class EmployeesState {
     }
 
     @Action(CreateEmployeeAction)
-    addUsers({getState, setState }: StateContext<EmployeeStateModel>, { employee }: CreateEmployeeAction) {
+    createEmployee({getState, setState }: StateContext<EmployeeStateModel>, { employee }: CreateEmployeeAction) {
         const state = getState();
         setState({
             employees: [...state.employees, {...employee}]
+        })
+    }
+
+    @Action(DeleteEmployeeAction)
+    deleteEmployee({getState, setState }: StateContext<EmployeeStateModel>, { id }: DeleteEmployeeAction) {
+        const state = getState();
+        setState({
+            employees: state.employees.filter(employee => employee.id !== id)
         })
     }
 }

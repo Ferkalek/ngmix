@@ -15,4 +15,8 @@ export class EmployeesService {
   createEmployee(employeeData: IEmployeeDTO): Observable<IEmployeeDTO> {
     return this._employeesRepositoryService.sendCreateEemployeeRequest(employeeData);
   }
+
+  deleteEmployee(id: string): Observable<null> {
+    return this._employeesRepositoryService.sendDeleteEemployeeRequest(id);
+  }
 }
