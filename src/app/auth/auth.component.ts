@@ -1,5 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 import { IAuthReqDTO } from './auth.interface';
 import { AuthService } from './auth.service';
@@ -12,65 +13,66 @@ import { ASubscriptionCollector } from '../shared/abstract-classes/subscription-
   styleUrls: ['./auth.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AuthComponent extends ASubscriptionCollector implements OnInit {
-  email: string = '';
-  password: string = '';
-  isLoginPage: boolean = false;
+export class AuthComponent extends ASubscriptionCollector {
+  readonly authForm: FormGroup = this._formBuilder.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(6)]]
+  });
 
+  get isLoginPage(): boolean {
+    return this._router.routerState.snapshot.url === AuthPath.Login
+  };
+
+  get email() {
+    return this.authForm.get('email');
+  }
+
+  get password() {
+    return this.authForm.get('password');
+  }
+ 
   constructor(
     private _authService: AuthService,
-    private _router: Router
+    private _router: Router,
+    private _formBuilder: FormBuilder
   ) {
     super();
   }
 
-  ngOnInit(): void {
-    this.isLoginPage = this._router.routerState.snapshot.url === AuthPath.Login;
-  }
-
-  login(): void {
-    if (!this.email || !this.password) {
+  onSubmit(): void {
+    if (this.authForm.invalid) {
       return;
     }
 
-    const data: IAuthReqDTO = {
-      email: this.email,
-      password: this.password
-    };
-
-    this._subscriptions.push(
-      this._authService.login(data)
-        .subscribe(result => {
-          this._authService.setTokenInLocalStorage(result.token);
-          this._router.navigate(['/']);
-        })
-    );
-
-    this.clear();
-  }
-
-  registration(): void {
-    if (!this.email || !this.password) {
-      return;
-    }
-
+    const { email, password } = this.authForm.value;
     const userData: IAuthReqDTO = {
-      email: this.email,
-      password: this.password
+      email,
+      password
     };
 
+    if (this.isLoginPage) {
+      this._login(userData);
+    } else {
+      this._registration(userData);
+    }
+  }
+
+  private _login(userData: IAuthReqDTO): void {
+    this._subscriptions.push(
+      this._authService.login(userData)
+        .subscribe(result => this._finalizeAuthProces(result.token))
+    );
+  }
+
+  private _registration(userData: IAuthReqDTO): void {
     this._subscriptions.push(
       this._authService.registration(userData)
-        .subscribe(result => {
-          this._router.navigate(['/auth/login']);
-        })
+        .subscribe(result => this._finalizeAuthProces(result.token))
     );
-
-    this.clear();
   }
 
-  clear(): void {
-    this.email = '';
-    this.password = '';
+  private _finalizeAuthProces(token: string): void {
+    this._authService.setTokenInLocalStorage(token);
+    this._router.navigate(['/']).then(() => this.authForm.reset());
   }
 }

@@ -1,21 +1,27 @@
 <h2 [textContent]="isLoginPage ? 'Login page!' : 'Registration page!'"></h2>
 
 <mat-card class="auth-form-card">
-    <mat-form-field class="auth-form-card__field">
-        <mat-label>Enter email</mat-label>
-        <input matInput [(ngModel)]="email">
-    </mat-form-field>
+    <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+        <mat-form-field class="auth-form-card__field">
+            <mat-label>Enter email</mat-label>
+            <input matInput formControlName="email">
+            <mat-error *ngIf="email.touched && email.hasError('email')">Enter correct email!</mat-error>
+            <mat-error *ngIf="email.touched && email.hasError('required')">This field is required!</mat-error>
+        </mat-form-field>
 
-    <mat-form-field class="auth-form-card__field">
-        <mat-label>Enter password</mat-label>
-        <input matInput [(ngModel)]="password" type="password">
-    </mat-form-field>
+        <mat-form-field class="auth-form-card__field">
+            <mat-label>Enter password</mat-label>
+            <input matInput formControlName="password" type="password">
+            <mat-error *ngIf="password.touched && password.hasError('minlength')">Password should be more than 6 chars!</mat-error>
+            <mat-error *ngIf="password.touched && password.hasError('required')">This field is required!</mat-error>
+        </mat-form-field>
 
-    <ng-container *ngIf="isLoginPage; else registrationForm">
-        <button mat-raised-button color="primary" (click)="login()">Login</button>
-    </ng-container>
-
-    <ng-template #registrationForm>
-        <button mat-raised-button color="primary" (click)="registration()">Registration</button>
-    </ng-template>
+        <ng-container *ngIf="isLoginPage; else registrationForm">
+            <button mat-raised-button color="primary" [disabled]="!authForm.valid">Login</button>
+        </ng-container>
+    
+        <ng-template #registrationForm>
+            <button mat-raised-button color="primary" [disabled]="!authForm.valid">Registration</button>
+        </ng-template>
+    </form>
 </mat-card>
