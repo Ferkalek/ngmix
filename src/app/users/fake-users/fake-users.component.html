@@ -1,6 +1,6 @@
 <h2>Create fake user!</h2>
 <mat-card class="fake-user">
-    <form [formGroup]="fakeUserForm" (ngSubmit)="onSubmit()">
+    <form #form="ngForm" [formGroup]="fakeUserForm" (ngSubmit)="onSubmit()">
         <mat-form-field class="fake-user__field">
             <mat-label>Enter name</mat-label>
             <input matInput formControlName="name" type="text">
@@ -20,3 +20,5 @@
         <button mat-raised-button color="primary" [disabled]="!fakeUserForm.valid">Create</button>
     </form>
 </mat-card>
+
+<app-fake-users-list></app-fake-users-list>

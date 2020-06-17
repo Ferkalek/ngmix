@@ -15,7 +15,6 @@ import { UsersState } from 'src/app/users/state/user.state';
 })
 export class UsersListComponent extends ASubscriptionCollector {
   @Select(UsersState.users) users$: Observable<IUserDTO[]>;
-  protected _subscriptions: Subscription[] = [];
   
   constructor(
     private _usersService: UsersService,

@@ -8,11 +8,16 @@ import { UsersState } from './state/user.state';
 import { SharedModule } from '../shared/shared.module';
 import { FakeUsersComponent } from './fake-users/fake-users.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FakeUsersListComponent } from './fake-users/fake-users-list/fake-users-list.component';
+import { FakeUserState } from './fake-users/state/fake-user.state';
+import { FakeUserComponent } from './fake-users/fake-users-list/fake-user/fake-user.component';
 
 @NgModule({
   declarations: [
     UsersListComponent,
-    FakeUsersComponent
+    FakeUsersComponent,
+    FakeUsersListComponent,
+    FakeUserComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +26,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     SharedModule,
     NgxsModule.forFeature([
-      UsersState
+      UsersState,
+      FakeUserState
     ])
   ]
 })

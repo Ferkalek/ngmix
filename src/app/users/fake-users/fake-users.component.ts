@@ -1,8 +1,10 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Component, ChangeDetectionStrategy, ViewChild } from '@angular/core';
+import { FormBuilder, Validators, FormGroup, NgForm } from '@angular/forms';
+import { Store } from '@ngxs/store';
 import { IFakeUserDTO } from './fake-user.interfase';
 import { FakeUsersService } from './fake-users.service';
 import { ASubscriptionCollector } from 'src/app/shared/abstract-classes/subscription-collector.abstract-class';
+import { CreateFakeUserAction } from './actions/fake-user.actions';
 
 @Component({
   selector: 'app-fake-users',
@@ -16,6 +18,8 @@ export class FakeUsersComponent extends ASubscriptionCollector {
     job: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(16)]]
   })
 
+  @ViewChild('form') form: NgForm;
+
   get name() {
     return this.fakeUserForm.get('name');
   }
@@ -26,7 +30,8 @@ export class FakeUsersComponent extends ASubscriptionCollector {
 
   constructor(
     private _fakeUserService: FakeUsersService,
-    private _formBilder: FormBuilder
+    private _formBilder: FormBuilder,
+    private _store: Store
   ) {
     super();
    }
@@ -43,8 +48,17 @@ export class FakeUsersComponent extends ASubscriptionCollector {
     };
     
     this._subscriptions.push(
-      this._fakeUserService.createFakeUser(fakeUserData).subscribe(d => console.log('.....', d))
+      this._fakeUserService.createFakeUser(fakeUserData)
+        .subscribe(fakeUser => {
+          this._store.dispatch(new CreateFakeUserAction(fakeUser));
+          // reset form but showing errors after reseting 
+          // this.fakeUserForm.reset();
+
+          // reset form and set unsubmitted status 
+          // that helping to get rid of highlighted mat-form-field
+          // attention: need add ViewChild and add it in template
+          this.form.resetForm();
+        })
     );
   }
-
 }
