@@ -13,7 +13,7 @@ import { CreateFakeUserAction } from './actions/fake-user.actions';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FakeUsersComponent extends ASubscriptionCollector {
-  readonly fakeUserForm: FormGroup = this._formBilder.group({
+  readonly fakeUserForm: FormGroup = this._formBuilder.group({
     name: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(16)]],
     job: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(16)]]
   })
@@ -30,7 +30,7 @@ export class FakeUsersComponent extends ASubscriptionCollector {
 
   constructor(
     private _fakeUserService: FakeUsersService,
-    private _formBilder: FormBuilder,
+    private _formBuilder: FormBuilder,
     private _store: Store
   ) {
     super();
