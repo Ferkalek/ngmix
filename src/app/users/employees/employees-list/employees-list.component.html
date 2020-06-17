@@ -1,0 +1,4 @@
+<h2>Employees List</h2>
+<div class="employees-list" *ngIf="(employees$ | async) as employees">
+  <app-employee *ngFor="let employee of employees" [employee]="employee"></app-employee>
+</div>
