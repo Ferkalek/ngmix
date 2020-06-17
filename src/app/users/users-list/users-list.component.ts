@@ -14,7 +14,7 @@ import { UsersState } from 'src/app/users/state/user.state';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UsersListComponent extends ASubscriptionCollector {
-  @Select(UsersState.users) users$: Observable<IUserDTO[]>;
+  @Select(UsersState.users) readonly users$: Observable<IUserDTO[]>;
   
   constructor(
     private _usersService: UsersService,

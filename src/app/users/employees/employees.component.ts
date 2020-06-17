@@ -1,19 +1,19 @@
 import { Component, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, NgForm } from '@angular/forms';
 import { Store } from '@ngxs/store';
-import { IFakeUserDTO } from './fake-user.interfase';
-import { FakeUsersService } from './fake-users.service';
+import { IEmployeeDTO } from './employees.interfase';
+import { EmployeesService } from './employees.service';
 import { ASubscriptionCollector } from 'src/app/shared/abstract-classes/subscription-collector.abstract-class';
-import { CreateFakeUserAction } from './actions/fake-user.actions';
+import { CreateEmployeeAction } from './actions/employees.actions';
 
 @Component({
-  selector: 'app-fake-users',
-  templateUrl: './fake-users.component.html',
-  styleUrls: ['./fake-users.component.scss'],
+  selector: 'app-employees',
+  templateUrl: './employees.component.html',
+  styleUrls: ['./employees.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FakeUsersComponent extends ASubscriptionCollector {
-  readonly fakeUserForm: FormGroup = this._formBuilder.group({
+export class EmployeesComponent extends ASubscriptionCollector {
+  readonly employeeForm: FormGroup = this._formBuilder.group({
     name: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(16)]],
     job: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(16)]]
   })
@@ -21,15 +21,15 @@ export class FakeUsersComponent extends ASubscriptionCollector {
   @ViewChild('form') form: NgForm;
 
   get name() {
-    return this.fakeUserForm.get('name');
+    return this.employeeForm.get('name');
   }
 
   get job() {
-    return this.fakeUserForm.get('job');
+    return this.employeeForm.get('job');
   }
 
   constructor(
-    private _fakeUserService: FakeUsersService,
+    private _employeeService: EmployeesService,
     private _formBuilder: FormBuilder,
     private _store: Store
   ) {
@@ -37,22 +37,22 @@ export class FakeUsersComponent extends ASubscriptionCollector {
    }
 
   onSubmit(): void {
-    if (this.fakeUserForm.invalid) {
+    if (this.employeeForm.invalid) {
       return;
     }
 
-    const { name, job } = this.fakeUserForm.value;
-    const fakeUserData: IFakeUserDTO = {
+    const { name, job } = this.employeeForm.value;
+    const employeeData: IEmployeeDTO = {
       name,
       job
     };
     
     this._subscriptions.push(
-      this._fakeUserService.createFakeUser(fakeUserData)
-        .subscribe(fakeUser => {
-          this._store.dispatch(new CreateFakeUserAction(fakeUser));
+      this._employeeService.createEmployee(employeeData)
+        .subscribe(employee => {
+          this._store.dispatch(new CreateEmployeeAction(employee));
           // reset form but showing errors after reseting 
-          // this.fakeUserForm.reset();
+          // this.employeeForm.reset();
 
           // reset form and set unsubmitted status 
           // that helping to get rid of highlighted mat-form-field

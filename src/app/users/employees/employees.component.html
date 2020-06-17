@@ -1,7 +1,7 @@
-<h2>Create fake user!</h2>
-<mat-card class="fake-user">
-    <form #form="ngForm" [formGroup]="fakeUserForm" (ngSubmit)="onSubmit()">
-        <mat-form-field class="fake-user__field">
+<h2>Create employee!</h2>
+<mat-card class="employees">
+    <form #form="ngForm" [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+        <mat-form-field class="employees__field">
             <mat-label>Enter name</mat-label>
             <input matInput formControlName="name" type="text">
             <mat-error *ngIf="name.touched && name.hasError('minlength')">Name field should be more than 4 chars!</mat-error>
@@ -9,7 +9,7 @@
             <mat-error *ngIf="name.touched && name.hasError('required')">This field is required!</mat-error>
         </mat-form-field>
 
-        <mat-form-field class="fake-user__field">
+        <mat-form-field class="employees__field">
             <mat-label>Enter job</mat-label>
             <input matInput formControlName="job" type="text">
             <mat-error *ngIf="job.touched && job.hasError('minlength')">Job field should be more than 4 chars!</mat-error>
@@ -17,8 +17,8 @@
             <mat-error *ngIf="job.touched && job.hasError('required')">This field is required!</mat-error>
         </mat-form-field>
 
-        <button mat-raised-button color="primary" [disabled]="!fakeUserForm.valid">Create</button>
+        <button mat-raised-button color="primary" [disabled]="!employeeForm.valid">Create</button>
     </form>
 </mat-card>
 
-<app-fake-users-list></app-fake-users-list>
+<app-employees-list></app-employees-list>
