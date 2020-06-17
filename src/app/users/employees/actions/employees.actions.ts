@@ -5,3 +5,9 @@ export class CreateEmployeeAction {
 
     constructor(public readonly employee: IEmployeeDTO) { }
 }
+
+export class DeleteEmployeeAction {
+    static readonly type = '[Employee] Delete Employee';
+
+    constructor(public readonly id: string) { }
+}

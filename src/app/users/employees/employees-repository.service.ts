@@ -18,4 +18,9 @@ export class EmployeesRepositoryService {
     return this._http
       .post<IEmployeeDTO>(`${environment.reqResApiBaseUrl}${environment.reqResApiPrefex}${ReqResApiEndpoint.Users}`, employeeData);
   }
+
+  sendDeleteEemployeeRequest(id: string): Observable<null> {
+    return this._http
+      .delete<null>(`${environment.reqResApiBaseUrl}${environment.reqResApiPrefex}${ReqResApiEndpoint.Users}/${id}`);
+  }
 }
