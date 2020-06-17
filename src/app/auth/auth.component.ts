@@ -14,7 +14,7 @@ import { ASubscriptionCollector } from '../shared/abstract-classes/subscription-
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AuthComponent extends ASubscriptionCollector {
-  readonly authForm: FormGroup = this._formBilder.group({
+  readonly authForm: FormGroup = this._formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]]
   });
@@ -34,7 +34,7 @@ export class AuthComponent extends ASubscriptionCollector {
   constructor(
     private _authService: AuthService,
     private _router: Router,
-    private _formBilder: FormBuilder
+    private _formBuilder: FormBuilder
   ) {
     super();
   }
